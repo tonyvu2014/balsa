@@ -1,23 +1,19 @@
 import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import TermItem from './components/TermItem';
+import { ScrollView, StyleSheet, FlatList } from 'react-native';
+import TermItem from '../components/TermItem';
 
 class PreferencesScreen extends React.Component {
-    static navigationOptions = {
-        title: 'Your Preferences',
-    };
 
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView>
                 <FlatList data={[
                     {key: 1, term: 'cryptocurrency'},
                     {key: 2, term: 'startup'}
                 ]}
                 renderItem={({item}) =><TermItem term={item.term}/>}
                 />
-            </View>
+            </ScrollView>
         )
     }
 
@@ -30,8 +26,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default StackNavigator({
-    Preferences: {
-      screen: PreferencesScreen,
-    },
-});
+export default PreferencesScreen;

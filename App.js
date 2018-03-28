@@ -1,24 +1,30 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
-import HomeScreen from './HomeScreen';
-import PreferencesScreen from './PreferencesScreen';
+import { TabNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements';
+import FeedsScreen from './screens/FeedsScreen';
+import PreferencesScreen from './screens/PreferencesScreen';
 
-const RootStack = StackNavigator(
+const Root = TabNavigator (
   {
-    Home: {
-      screen: HomeScreen,
+    Feeds: {
+        screen: FeedsScreen,
+        navigationOptions: {
+          tabBarLabel: 'Feeds',
+          tabBarIcon: ({ tintColor }) => <Icon name='list' size={35} color={tintColor}/>
+        },
     },
     Preferences: {
-      screen: PreferencesScreen,
+        screen: PreferencesScreen,
+        navigationOptions: {
+          tabBarLabel: 'Preferences',
+          tabBarIcon: ({tintColor}) => <Icon name='account-circle' size={35} color={tintColor} />
+        },
     },
-  },
-  {
-    initialRouteName: 'Home',
   }
 );
 
 export default class App extends React.Component {
   render() {
-    return <RootStack/>
+    return <Root/>
   }
 };
