@@ -1,13 +1,26 @@
 import React from 'react';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import FeedsScreen from './screens/FeedsScreen';
 import PreferencesScreen from './screens/PreferencesScreen';
+import ReaderScreen from './screens/ReaderScreen';
+
+const FeedsStack = StackNavigator({
+  Feeds: {
+    screen: FeedsScreen,
+    navigationOptions: {
+      title: 'Feeds',
+    },
+  },
+  Reader: {
+    screen: ReaderScreen
+  },
+});
 
 const Root = TabNavigator (
   {
     Feeds: {
-        screen: FeedsScreen,
+        screen: FeedsStack,
         navigationOptions: {
           tabBarLabel: 'Feeds',
           tabBarIcon: ({ tintColor }) => <Icon name='list' size={35} color={tintColor}/>

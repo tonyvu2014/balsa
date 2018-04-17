@@ -16,15 +16,14 @@ export default class TermAdditionBox extends React.Component {
                 <TextInput style={styles.box} 
                 placeholder='What topic do you want to subscribe to?'
                 onChangeText={(text) => this.setState({text})}
-                value={this.state.text}
-                multiline={false}
-                numberOfLines={1}/>
+                value={this.state.text}/>
                 <View style={styles.action}>
                     <Button title='+' color='#fff' onPress={() => {Alert.alert('Adding this item')}}></Button>
                 </View>
             </View>
         )
     }
+    
 }
 
 const styles = StyleSheet.create({
