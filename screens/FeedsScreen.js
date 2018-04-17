@@ -5,7 +5,7 @@ import ArticleItem from '../components/ArticleItem'
 class FeedsScreen extends React.Component {
     render() {
         return (
-            <ScrollView>
+            <ScrollView contentContainerStyle={styles.container}>
               <FlatList
               data={[
                 {key: 1, title: 'Facebook is in trouble', description: 'Facebook CEO Mark Zuckeberg apologizes for the recent data breach', url: 'https://www.facebook.com'},
@@ -21,7 +21,7 @@ class FeedsScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 22,
+        paddingTop: 30,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center'

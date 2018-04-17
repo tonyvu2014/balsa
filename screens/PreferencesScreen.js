@@ -1,12 +1,17 @@
 import React from 'react';
-import { ScrollView, StyleSheet, FlatList } from 'react-native';
+import { View, ScrollView, StyleSheet, FlatList } from 'react-native';
 import TermItem from '../components/TermItem';
+import TermAdditionBox from '../components/TermAdditionBox';
 
 class PreferencesScreen extends React.Component {
 
     render() {
         return (
-            <ScrollView>
+            <View style={styles.container}>
+            <View style={styles.box}>
+                <TermAdditionBox/>
+            </View>
+            <ScrollView contentContainerStyle={styles.list}>
                 <FlatList data={[
                     {key: 1, term: 'cryptocurrency'},
                     {key: 2, term: 'startup'}
@@ -14,6 +19,7 @@ class PreferencesScreen extends React.Component {
                 renderItem={({item}) =><TermItem term={item.term}/>}
                 />
             </ScrollView>
+            </View>
         )
     }
 
@@ -21,8 +27,18 @@ class PreferencesScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexDirection: 'column',
+        flex: 10,
+        paddingTop: 30,
         backgroundColor: '#fff'
+    },
+
+    box: {
+        flex: 1
+    },
+
+    list: {
+        flex: 9
     }
 })
 
