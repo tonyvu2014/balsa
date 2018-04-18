@@ -30,23 +30,27 @@ export default class TermAdditionBox extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 10,
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
     },
 
     box: {
-        flex: 8,
+        flex: 0.8,
+        justifyContent: 'center',
         backgroundColor:  '#f9f9f9',
         fontSize: 14,
         color: '#000',
+        height: 30,
         paddingLeft: 3,
         paddingRight: 3,
         borderRadius: 4
     },
 
     action: {
-        flex: 2,
+        flex: 0.2,
+        justifyContent: 'center',
+        height: 30,
         backgroundColor: '#428bca'
     }
 })

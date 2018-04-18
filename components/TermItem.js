@@ -21,7 +21,7 @@ export default class TermItem extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        flex: 10,
+        flex: 1,
         backgroundColor: '#5cb85c',
         marginTop: 5,
         paddingTop: 3,
@@ -29,18 +29,18 @@ const styles = StyleSheet.create({
     },
 
     content: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        flex: 8,
-        paddingLeft: 3
+        flex: 0.8,
+        justifyContent: 'center'        
     },
 
     term: {
+        paddingLeft: 3,
+        paddingRight: 3,
         color: '#fff',
         fontSize: 14
     },
 
     action: {
-        flex: 2
+        flex: 0.2
     }
 })
