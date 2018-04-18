@@ -1,9 +1,19 @@
 import React from 'react';
-import { WebView, StyleSheet } from 'react-native';
+import { View, WebView, StyleSheet } from 'react-native';
+import loadIndicator from '../components/LoadingIndicator';
 
 export default class ReaderScreen extends React.Component {
     render() {
-        return <WebView source = {{uri: this.props.navigation.state.params.url}} style = {styles.viewer}/>
+        return (
+        <WebView 
+            source = {{uri: this.props.navigation.state.params.url}} 
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            renderLoading={loadIndicator} 
+            startInLoadingState={true}  
+            style = {styles.viewer}
+        />
+        )
     }
 }
 
