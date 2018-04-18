@@ -28,17 +28,17 @@ class PreferencesScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        flex: 10,
-        paddingTop: 30,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        flex: 1,
+        marginTop: 30
     },
 
     box: {
-        flex: 1
+        flex: 0.1,
     },
 
     list: {
-        flex: 9
+        flex: 0.9,
     }
 })
 
