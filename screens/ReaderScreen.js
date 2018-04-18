@@ -11,7 +11,8 @@ export default class ReaderScreen extends React.Component {
             domStorageEnabled={true}
             renderLoading={loadIndicator} 
             startInLoadingState={true}  
-            style = {styles.viewer}
+            style={styles.viewer}
+            scalesPageToFit={true}
         />
         )
     }
