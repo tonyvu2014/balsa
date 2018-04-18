@@ -15,6 +15,7 @@ export default class TermAdditionBox extends React.Component {
             <View style={styles.container}>
                 <View style={styles.box}>
                     <TextInput
+                    style={styles.input}
                     placeholder='What topic do you want to subscribe to?'
                     onChangeText={(text) => this.setState({text})}
                     value={this.state.text}/>
@@ -39,12 +40,15 @@ const styles = StyleSheet.create({
         flex: 0.8,
         justifyContent: 'center',
         backgroundColor:  '#f9f9f9',
-        fontSize: 14,
-        color: '#000',
         height: 30,
         paddingLeft: 3,
         paddingRight: 3,
         borderRadius: 4
+    },
+
+    input: {
+        fontSize: 14,
+        color: '#000'
     },
 
     action: {
