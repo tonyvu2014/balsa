@@ -2,11 +2,10 @@ import React from 'react';
 import { StyleSheet, ActivityIndicator } from 'react-native';
 
 export default loadIndicator = () => {
-        return <ActivityIndicator
+    return <ActivityIndicator
         color='#5cb85c'
         size='large'
-        style={styles.indicator}
-      />
+        style={styles.indicator}/>
 }
 
 const styles = StyleSheet.create({
