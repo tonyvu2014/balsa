@@ -24,25 +24,25 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         backgroundColor: '#428bca',
         padding:10,
-        marginTop: 5,
-        marginBottom: 5
+        marginTop: 8
     },
   
     desc: {
         fontSize: 14,
-        color: '#fff'
+        color: '#fff',
+        paddingBottom: 3
     },
     
     heading: {
         fontSize: 18,
         color: '#f9f9f9',
         fontWeight: 'bold',
-        paddingBottom: 5
+        paddingBottom: 3
     },
 
     link: {
-        flexDirection: 'column',
-        alignItems: 'flex-end',
-        justifyContent: 'center'
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
     }
 });

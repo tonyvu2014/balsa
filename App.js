@@ -9,11 +9,14 @@ const FeedsStack = StackNavigator({
   Feeds: {
     screen: FeedsScreen,
     navigationOptions: {
-      title: 'Feeds',
+      title: 'Feeds'
     },
   },
   Reader: {
-    screen: ReaderScreen
+    screen: ReaderScreen,
+    navigationOptions: {
+      title: 'Article'
+    }
   },
 });
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 export default class TermAdditionBox extends React.Component {
 
@@ -17,11 +18,13 @@ export default class TermAdditionBox extends React.Component {
                     <TextInput
                     style={styles.input}
                     placeholder='What topic do you want to subscribe to?'
+                    underlineColorAndroid='transparent'
                     onChangeText={(text) => this.setState({text})}
                     value={this.state.text}/>
                 </View>
                 <View style={styles.action}>
-                    <Button title='+' color='#fff' onPress={() => {Alert.alert('Adding this item')}}></Button>
+                    <Button title='+' onPress={() => {Alert.alert('Adding this item')}}>
+                    </Button>
                 </View>
             </View>
         )
@@ -33,16 +36,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'center'
     },
 
     box: {
         flex: 0.8,
         justifyContent: 'center',
         backgroundColor:  '#f9f9f9',
-        height: 30,
-        paddingLeft: 3,
-        paddingRight: 3,
+        height: 40,
+        paddingLeft: 5,
+        paddingRight: 5,
         borderRadius: 4
     },
 
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
     action: {
         flex: 0.2,
         justifyContent: 'center',
-        height: 30,
+        height: 40,
         backgroundColor: '#428bca'
     }
 })

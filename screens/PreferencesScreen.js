@@ -30,11 +30,13 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: '#fff',
         flex: 1,
-        marginTop: 30
+        marginTop: 5
     },
 
     box: {
         flex: 0.1,
+        marginTop: 10,
+        marginBottom: 10
     },
 
     list: {
