@@ -3,7 +3,7 @@ import { WebView, StyleSheet } from 'react-native';
 
 export default class ReaderScreen extends React.Component {
     render() {
-        return <WebView source = {this.props.url} style = {styles.viewer}/>
+        return <WebView source = {{uri: this.props.navigation.state.params.url}} style = {styles.viewer}/>
     }
 }
 
