@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 export default class TermItem extends React.Component {
 
@@ -10,7 +11,7 @@ export default class TermItem extends React.Component {
                     <Text style={styles.term}>{this.props.term}</Text>
                 </View>
                 <View style={styles.action}>
-                    <Button title='x' color='#5cb85c' onPress={() => {Alert.alert('Deleting this item')}}></Button>
+                    <Icon raised size={16} name='remove' underlayColor='#fff' color='#5cb85c' onPress={() => {Alert.alert('Deleting this item')}}/>
                 </View>
             </View>
         )
@@ -42,6 +43,9 @@ const styles = StyleSheet.create({
     },
 
     action: {
-        flex: 0.2
+        flex: 0.2,
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        backgroundColor: '#5cb85c'
     }
 })

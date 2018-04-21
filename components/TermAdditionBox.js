@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, TextInput, StyleSheet, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
+import SharedPreferences from 'react-native-shared-preferences';
 
 export default class TermAdditionBox extends React.Component {
 
@@ -9,6 +10,19 @@ export default class TermAdditionBox extends React.Component {
         this.state = {
           text: '',
         };
+    }
+
+    addTerm() {
+        let term = this.state.text
+        if (term.length == 0) {
+            Alert.alert('Topic is empty')
+            return
+        }
+        SharedPreferences.getItem('preferences', v => {
+            let preferences = v ? v + ',' + term.toLowerCase() : term.toLowerCase
+            console.log('Preferences: ', preferences)
+            SharedPreferences.setItem('preferences', preferences)
+        })
     }
 
     render() {
@@ -23,8 +37,7 @@ export default class TermAdditionBox extends React.Component {
                     value={this.state.text}/>
                 </View>
                 <View style={styles.action}>
-                    <Button title='+' onPress={() => {Alert.alert('Adding this item')}}>
-                    </Button>
+                    <Icon name='add' underlayColor='#428bca' color='#fff' onPress={() => this.addTerm()}/>
                 </View>
             </View>
         )
