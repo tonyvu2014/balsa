@@ -11,27 +11,6 @@ export default class TermAdditionBox extends React.Component {
         };
     }
 
-    addTerm() {
-        console.log('Adding term:', term)
-        let term = this.state.text
-        if (!term) {
-            Alert.alert('Topic is empty')
-            return
-        }
-        let newTerm = term.toLowerCase()
-        AsyncStorage.getItem('preferences').then(value => {
-            if (value) {
-                let terms = value.split(',')
-                if ( terms.indexOf(newTerm) > -1 ) {
-                    return
-                }
-            }
-            let preferences = value ? newTerm + ',' + value : newTerm
-            console.log('Preferences', preferences) 
-            AsyncStorage.setItem('preferences', preferences);
-        }).done();
-    }
-
     render() {
         return (
             <View style={styles.container}>
@@ -44,7 +23,7 @@ export default class TermAdditionBox extends React.Component {
                     value={this.state.text}/>
                 </View>
                 <View style={styles.action}>
-                    <Icon name='add' underlayColor='#428bca' color='#fff' onPress={() => this.addTerm()}/>
+                    <Icon name='add' underlayColor='#428bca' color='#fff' onPress={() => this.props.action(this.state.text)}/>
                 </View>
             </View>
         )
