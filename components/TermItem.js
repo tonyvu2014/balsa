@@ -11,7 +11,7 @@ export default class TermItem extends React.Component {
                     <Text style={styles.term}>{this.props.term}</Text>
                 </View>
                 <View style={styles.action}>
-                    <Icon raised size={16} name='remove' underlayColor='#fff' color='#5cb85c' onPress={() => {Alert.alert('Deleting this item')}}/>
+                    <Icon raised size={16} name='remove' underlayColor='#fff' color='#5cb85c' onPress={() => {this.props.action(this.props.term)}}/>
                 </View>
             </View>
         )

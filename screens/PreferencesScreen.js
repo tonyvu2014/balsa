@@ -13,16 +13,11 @@ class PreferencesScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.setTerms()
-    }
-
-    setTerms() {
         this.getTerms()
     }
 
     getTerms() {
         AsyncStorage.getItem('preferences').then(value => {
-            console.log('Retrieved preferences:', value)
             if (value) {
                 let terms = []
                 let prefs = value.split(',')
@@ -60,6 +55,34 @@ class PreferencesScreen extends React.Component {
         }).done();
     }
 
+    removeTerm = (term) => {
+        if (!term) {
+            Alert.alert('Topic is empty')
+            return
+        }
+
+        let targetTerm = term.toLowerCase()
+        AsyncStorage.getItem('preferences').then(value => {
+            if (!value) {
+                return
+            }     
+
+            let prefs = value.split(',')
+            let index = prefs.indexOf(targetTerm)
+            if ( index > -1 ) {
+                prefs.splice(index, 1)
+                let preferences = prefs.join(',')
+                let terms = []
+                for (let i = 0; i < prefs.length; i++) {
+                    terms.push({key: i, term: prefs[i]})
+                }
+                this.setState({terms: terms})
+                AsyncStorage.setItem('preferences', preferences);
+            }
+        }).done();
+
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -68,7 +91,7 @@ class PreferencesScreen extends React.Component {
             </View>
             <ScrollView contentContainerStyle={styles.list}>
                 <FlatList data={this.state.terms}
-                renderItem={({item}) =><TermItem term={item.term}/>}
+                renderItem={({item}) =><TermItem term={item.term} action={this.removeTerm}/>}
                 />
             </ScrollView>
             </View>
