@@ -1,8 +1,46 @@
 import React from 'react';
-import { StyleSheet, FlatList, ScrollView, Button } from 'react-native';
+import { StyleSheet, FlatList, ScrollView, Button, AsyncStorage } from 'react-native';
+import axios from 'axios'
 import ArticleItem from '../components/ArticleItem'
 
+
+const FEED_URL = 'http://localhost:8000/api/feeds'
+const LIMIT = 50
+
 class FeedsScreen extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+          feeds: [],
+        };
+    }
+
+    componentDidMount() {
+        this.getFeeds()
+    }
+
+    getFeeds() {
+        let feeds = []
+        AsyncStorage.getItem('preferences').then(value => {
+            let terms = value.split(',')
+            axios.post(FEED_URL, {
+                terms: terms,
+                limit: LIMIT
+            }).then(res => {
+                let data = res.data
+                for (let i = 0; i < data.length; i++) {
+                    feeds.push({
+                        key: i,
+                        title: data[i].title,
+                        description: data[i].description,
+                        url: data[i].link
+                    })
+                }
+                this.setState({feeds: feeds})
+            })
+        })
+    }
 
     onReadMore = (url) => {
         this.props.navigation.navigate('Reader', { url });
@@ -12,10 +50,7 @@ class FeedsScreen extends React.Component {
         return (
             <ScrollView contentContainerStyle={styles.container}>
               <FlatList
-              data={[
-                {key: 1, title: 'Facebook is in trouble', description: 'Facebook CEO Mark Zuckeberg apologizes for the recent data breach', url: 'https://www.google.com'},
-                {key: 2, title: 'Vuejs is taking over Reactjs', description: 'Vuejs is gaining popularity', url: 'https://www.medium.com'}
-              ]}
+              data={this.state.feeds}
               renderItem={({item}) =><ArticleItem title={item.title} desc={item.description} url={item.url} action={this.onReadMore}/>}
               />
             </ScrollView>
