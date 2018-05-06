@@ -1,11 +1,14 @@
 import React from 'react';
-import { StyleSheet, FlatList, ScrollView, Button, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ScrollView, Button, AsyncStorage } from 'react-native';
 import axios from 'axios'
 import ArticleItem from '../components/ArticleItem'
+import loadIndicator from '../components/LoadingIndicator';
 
 
 const FEED_URL = 'http://localhost:8000/api/feeds'
-const LIMIT = 50
+const LIMIT = 20
+const TIMEOUT = 10000
+
 
 class FeedsScreen extends React.Component {
 
@@ -13,6 +16,8 @@ class FeedsScreen extends React.Component {
         super(props);
         this.state = {
           feeds: [],
+          isLoading: true,
+          hasError: false
         };
     }
 
@@ -22,15 +27,18 @@ class FeedsScreen extends React.Component {
 
     getFeeds() {
         let feeds = []
-        AsyncStorage.getItem('preferences').then(value => {
+        this.setState({ isLoading: true, hasError: false })
+        AsyncStorage.getItem('preferences')
+        .then(value => {
             let terms = value.split(',')
             axios.post(FEED_URL, {
                 terms: terms,
                 limit: LIMIT
-            }).then(res => {
+            }, 
+            {'timeout': TIMEOUT})
+            .then(res => {
                 let data = res.data
                 for (let i = 0; i < data.length; i++) {
-                    console.log('Title:', data[i].title)
                     feeds.push({
                         key: i,
                         title: data[i].title,
@@ -38,9 +46,11 @@ class FeedsScreen extends React.Component {
                         url: data[i].link
                     })
                 }
-                this.setState({feeds: feeds})
-            }).catch(err => {
+                this.setState({ feeds: feeds, isLoading: false, hasError: false })
+            })
+            .catch(err => {
                 console.log(err)
+                this.setState({ isLoading:false, hasError: true })
             })
         })
     }
@@ -50,14 +60,26 @@ class FeedsScreen extends React.Component {
     };
 
     render() {
-        return (
-            <ScrollView contentContainerStyle={styles.container}>
-              <FlatList
-              data={this.state.feeds}
-              renderItem={({item}) =><ArticleItem title={item.title} desc={item.description} url={item.url} action={this.onReadMore}/>}
-              />
-            </ScrollView>
-        );
+        if (this.state.isLoading) {
+            const activityIndicator = loadIndicator();
+            return activityIndicator
+        } else if (this.state.hasError){
+            return (
+                <View style={styles.errorContainer}>
+                    <Text style={styles.error}>Something went wrong. Please try again later.</Text>
+                </View>
+            )      
+        } else {
+            return (
+                <ScrollView contentContainerStyle={styles.container}>
+                <FlatList
+                style={styles.feeds}
+                data={this.state.feeds}
+                renderItem={({item}) =><ArticleItem title={item.title} desc={item.description} url={item.url} action={this.onReadMore}/>}
+                />
+                </ScrollView>
+            );
+        }
     }
 };
 
@@ -68,6 +90,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'stretch',
         justifyContent: 'center'
+    },
+
+    errorContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    error: {
+        color: '#D9534F',
+        fontSize: 14
     }
 });
 
