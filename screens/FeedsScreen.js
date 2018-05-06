@@ -30,6 +30,7 @@ class FeedsScreen extends React.Component {
             }).then(res => {
                 let data = res.data
                 for (let i = 0; i < data.length; i++) {
+                    console.log('Title:', data[i].title)
                     feeds.push({
                         key: i,
                         title: data[i].title,
@@ -38,6 +39,8 @@ class FeedsScreen extends React.Component {
                     })
                 }
                 this.setState({feeds: feeds})
+            }).catch(err => {
+                console.log(err)
             })
         })
     }

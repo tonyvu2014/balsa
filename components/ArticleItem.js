@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Linking } from 'react-native';
+import HTML from 'react-native-render-html';
 
 export default class ArticleItem extends React.Component {
 
@@ -7,7 +8,7 @@ export default class ArticleItem extends React.Component {
         return (
             <View style={styles.item}>
                 <Text style={styles.heading}>{this.props.title}</Text>
-                <Text style={styles.desc}>{this.props.desc}</Text>
+                <HTML html={this.props.desc} containerStyle={styles.desc} baseFontStyle={{fontSize: 14, color: '#fff'}}/>
                 <View style={styles.link}>
                     <Button title='Read More' color='#5bc0de' onPress={() => this.props.action(this.props.url)} />
                 </View>
@@ -28,8 +29,6 @@ const styles = StyleSheet.create({
     },
   
     desc: {
-        fontSize: 14,
-        color: '#fff',
         paddingBottom: 3
     },
     
