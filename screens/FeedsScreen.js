@@ -42,7 +42,6 @@ class FeedsScreen extends React.Component {
                     feeds.push({
                         key: i,
                         title: data[i].title,
-                        description: data[i].description,
                         url: data[i].link
                     })
                 }

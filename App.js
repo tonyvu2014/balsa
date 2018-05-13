@@ -36,6 +36,14 @@ const Root = TabNavigator (
           tabBarIcon: ({tintColor}) => <Icon name='account-circle' size={35} color={tintColor} />
         },
     },
+  },
+  {
+    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      style: {
+        height: 50
+      }
+    }
   }
 );
 

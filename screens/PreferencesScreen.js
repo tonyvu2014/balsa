@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, FlatList, AsyncStorage } from 'react-native';
+import { View, Alert, ScrollView, StyleSheet, FlatList, AsyncStorage } from 'react-native';
 import TermItem from '../components/TermItem';
 import TermAdditionBox from '../components/TermAdditionBox';
 
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: '#fff',
         flex: 1,
-        marginTop: 5
+        marginTop: 15
     },
 
     box: {
