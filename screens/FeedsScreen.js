@@ -79,13 +79,11 @@ class FeedsScreen extends React.Component {
                         renderItem={({item}) =><ArticleItem title={item.title} url={item.url} action={this.onReadMore}/>}
                         />
                     </ScrollView>
-                    <View style={styles.banner}>
-                        <AdMobBanner
-                            bannerSize="fullBanner"
-                            adUnitID="ca-app-pub-3940256099942544/6300978111"
-                            didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
-                        />
-                    </View>
+                    <AdMobBanner style={styles.banner}
+                        bannerSize="fullBanner"
+                        adUnitID="ca-app-pub-3940256099942544/6300978111"
+                        didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
+                    />
                 </View>
             );
         }
@@ -102,11 +100,11 @@ const styles = StyleSheet.create({
     },
 
     list: {
-        flex: 0.9
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     banner: {
-        flex: 0.1,
         justifyContent: 'center',
         alignItems: 'center'
     },

@@ -95,13 +95,11 @@ class PreferencesScreen extends React.Component {
                     renderItem={({item}) =><TermItem term={item.term} action={this.removeTerm}/>}
                     />
                 </ScrollView>
-                <View style={styles.banner}>
-                    <AdMobBanner
-                        bannerSize="fullBanner"
-                        adUnitID="ca-app-pub-3940256099942544/6300978111"
-                        didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
-                    />
-                </View>
+                <AdMobBanner style={styles.banner}
+                    bannerSize="fullBanner"
+                    adUnitID="ca-app-pub-3940256099942544/6300978111"
+                    didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
+                />
             </View>
         )
     }
@@ -118,17 +116,16 @@ const styles = StyleSheet.create({
     },
 
     box: {
-        flex: 0.1,
-        marginTop: 10,
+        marginTop: 50,
         marginBottom: 10
     },
 
     list: {
-        flex: 0.8,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     banner: {
-        flex: 0.1,
         justifyContent: 'center',
         alignItems: 'center'
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, WebView, StyleSheet } from 'react-native';
+import { AdMobBanner } from 'expo';
 import loadIndicator from '../components/LoadingIndicator';
 
 export default class ReaderScreen extends React.Component {
@@ -36,14 +37,11 @@ const styles = StyleSheet.create({
     },
 
     viewer: {
-        flex: 0.9,
-        marginTop: 10,
-        marginBottom: 10
+        justifyContent: 'center'
     },
 
     banner: {
-        flex: 0.1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
