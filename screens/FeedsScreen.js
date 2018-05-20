@@ -1,8 +1,9 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, ScrollView, Button, AsyncStorage } from 'react-native';
+import React from 'react'
+import { View, Text, StyleSheet, FlatList, ScrollView, Button, AsyncStorage } from 'react-native'
+import { AdMobBanner } from 'expo'
 import axios from 'axios'
 import ArticleItem from '../components/ArticleItem'
-import loadIndicator from '../components/LoadingIndicator';
+import loadIndicator from '../components/LoadingIndicator'
 
 
 const FEED_URL = 'http://localhost:8000/api/feeds'
@@ -30,6 +31,7 @@ class FeedsScreen extends React.Component {
         this.setState({ isLoading: true, hasError: false })
         AsyncStorage.getItem('preferences')
         .then(value => {
+            console.log('Value:', value)
             let terms = value.split(',')
             axios.post(FEED_URL, {
                 terms: terms,
@@ -70,13 +72,21 @@ class FeedsScreen extends React.Component {
             )      
         } else {
             return (
-                <ScrollView contentContainerStyle={styles.container}>
-                <FlatList
-                style={styles.feeds}
-                data={this.state.feeds}
-                renderItem={({item}) =><ArticleItem title={item.title} desc={item.description} url={item.url} action={this.onReadMore}/>}
-                />
-                </ScrollView>
+                <View style={styles.container}>
+                    <ScrollView contentContainerStyle={styles.list}>
+                        <FlatList
+                        data={this.state.feeds}
+                        renderItem={({item}) =><ArticleItem title={item.title} url={item.url} action={this.onReadMore}/>}
+                        />
+                    </ScrollView>
+                    <View style={styles.banner}>
+                        <AdMobBanner
+                            bannerSize="fullBanner"
+                            adUnitID="ca-app-pub-3940256099942544/6300978111"
+                            didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
+                        />
+                    </View>
+                </View>
             );
         }
     }
@@ -89,6 +99,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'stretch',
         justifyContent: 'center'
+    },
+
+    list: {
+        flex: 0.9
+    },
+
+    banner: {
+        flex: 0.1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     errorContainer: {

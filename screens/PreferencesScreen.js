@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Alert, ScrollView, StyleSheet, FlatList, AsyncStorage } from 'react-native';
+import { AdMobBanner } from 'expo';
 import TermItem from '../components/TermItem';
 import TermAdditionBox from '../components/TermAdditionBox';
 
@@ -86,14 +87,21 @@ class PreferencesScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-            <View style={styles.box}>
-                <TermAdditionBox action={this.addTerm}/>
-            </View>
-            <ScrollView contentContainerStyle={styles.list}>
-                <FlatList data={this.state.terms}
-                renderItem={({item}) =><TermItem term={item.term} action={this.removeTerm}/>}
-                />
-            </ScrollView>
+                <View style={styles.box}>
+                    <TermAdditionBox action={this.addTerm}/>
+                </View>
+                <ScrollView contentContainerStyle={styles.list}>
+                    <FlatList data={this.state.terms}
+                    renderItem={({item}) =><TermItem term={item.term} action={this.removeTerm}/>}
+                    />
+                </ScrollView>
+                <View style={styles.banner}>
+                    <AdMobBanner
+                        bannerSize="fullBanner"
+                        adUnitID="ca-app-pub-3940256099942544/6300978111"
+                        didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
+                    />
+                </View>
             </View>
         )
     }
@@ -105,7 +113,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: '#fff',
         flex: 1,
-        marginTop: 15
+        alignItems: 'stretch',
+        justifyContent: 'center'
     },
 
     box: {
@@ -115,7 +124,13 @@ const styles = StyleSheet.create({
     },
 
     list: {
-        flex: 0.9,
+        flex: 0.8,
+    },
+
+    banner: {
+        flex: 0.1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 
