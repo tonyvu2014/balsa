@@ -20,6 +20,7 @@ class PreferencesScreen extends React.Component {
     getTerms() {
         AsyncStorage.getItem('preferences').then(value => {
             if (value) {
+                console.log('preferences:', value)
                 let terms = []
                 let prefs = value.split(',')
                 for (let i = 0; i < prefs.length; i++) {
@@ -90,11 +91,10 @@ class PreferencesScreen extends React.Component {
                 <View style={styles.box}>
                     <TermAdditionBox action={this.addTerm}/>
                 </View>
-                <ScrollView contentContainerStyle={styles.list}>
-                    <FlatList data={this.state.terms}
+                <FlatList
+                    data={this.state.terms}
                     renderItem={({item}) =><TermItem term={item.term} action={this.removeTerm}/>}
-                    />
-                </ScrollView>
+                />
                 <AdMobBanner style={styles.banner}
                     bannerSize="fullBanner"
                     adUnitID="ca-app-pub-3940256099942544/6300978111"
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
 
     box: {
         marginTop: 50,
-        marginBottom: 10
+        marginBottom: 20
     },
 
     list: {

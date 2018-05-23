@@ -1,12 +1,14 @@
 import React from 'react'
 import { View, Text, StyleSheet, FlatList, ScrollView, Button, AsyncStorage } from 'react-native'
 import { AdMobBanner } from 'expo'
+import { Icon } from 'react-native-elements';
 import axios from 'axios'
+import RefreshButton from '../components/RefreshButton';
 import ArticleItem from '../components/ArticleItem'
 import loadIndicator from '../components/LoadingIndicator'
 
 
-const FEED_URL = 'http://localhost:8000/api/feeds'
+const FEED_URL = 'http://67.209.122.81:8000/api/feeds'
 const LIMIT = 20
 const TIMEOUT = 10000
 
@@ -26,7 +28,7 @@ class FeedsScreen extends React.Component {
         this.getFeeds()
     }
 
-    getFeeds() {
+    getFeeds = () => {
         let feeds = []
         this.setState({ isLoading: true, hasError: false })
         AsyncStorage.getItem('preferences')
@@ -66,13 +68,22 @@ class FeedsScreen extends React.Component {
             return activityIndicator
         } else if (this.state.hasError){
             return (
-                <View style={styles.errorContainer}>
+                <View style={styles.messageContainer}>
                     <Text style={styles.error}>Something went wrong. Please try again later.</Text>
+                    <RefreshButton action={this.getFeeds}/>
                 </View>
             )      
+        } else if (this.state.feeds.length == 0) {
+            return (
+                <View style={styles.messageContainer}>
+                    <Text style={styles.notification}>No articles at the moment. Refresh or go to Preferences to update your subscription.</Text>
+                    <RefreshButton action={this.getFeeds}/>
+                </View>
+            )
         } else {
             return (
                 <View style={styles.container}>
+                    <RefreshButton action={this.getFeeds}/>
                     <ScrollView contentContainerStyle={styles.list}>
                         <FlatList
                         data={this.state.feeds}
@@ -95,13 +106,13 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff',
-        alignItems: 'stretch',
+        alignItems: 'center',
         justifyContent: 'center'
     },
 
     list: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'stretch'
     },
 
     banner: {
@@ -109,7 +120,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-    errorContainer: {
+    messageContainer: {
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff',
@@ -119,7 +130,14 @@ const styles = StyleSheet.create({
 
     error: {
         color: '#D9534F',
+        textAlign: 'center',
         fontSize: 14
+    },
+
+    notification: {
+        color: '#428bca',
+        fontSize: 14,
+        textAlign: 'center'
     }
 });
 

@@ -23,7 +23,7 @@ export default class TermAdditionBox extends React.Component {
                     value={this.state.text}/>
                 </View>
                 <View style={styles.action}>
-                    <Icon name='add' underlayColor='#428bca' color='#fff' onPress={() => this.props.action(this.state.text)}/>
+                    <Icon name='add' underlayColor='#428bca' color='#fff' onPress={() => {this.props.action(this.state.text); this.setState({text: ''});}}/>
                 </View>
             </View>
         )

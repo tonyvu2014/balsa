@@ -26,20 +26,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#5cb85c',
         paddingTop: 3,
         paddingBottom: 3,
-        marginTop: 5
+        marginTop: 10
     },
 
     content: {
         flex: 0.8,
         justifyContent: 'center',
-        marginBottom: 3 
     },
 
     term: {
         paddingLeft: 5,
         paddingRight: 5,
         color: '#fff',
-        fontSize: 14
+        fontSize: 16
     },
 
     action: {

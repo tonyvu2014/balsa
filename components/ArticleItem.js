@@ -25,15 +25,10 @@ const styles = StyleSheet.create({
         padding:10,
         marginTop: 8
     },
-  
-    desc: {
-        paddingBottom: 3
-    },
-    
+
     heading: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#f9f9f9',
-        fontWeight: 'bold',
         paddingBottom: 3
     },
 
