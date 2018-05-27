@@ -16,12 +16,14 @@ export default class ReaderScreen extends React.Component {
                 style={styles.viewer}
                 scalesPageToFit={true}
             />
-            <AdMobBanner
-                style={styles.banner}
-                bannerSize="fullBanner"
-                adUnitID="ca-app-pub-3940256099942544/6300978111"
-                didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
-            />
+            <View style={styles.banner}>
+                <AdMobBanner
+                    style={styles.banner}
+                    bannerSize="fullBanner"
+                    adUnitID="ca-app-pub-3940256099942544/6300978111"
+                    didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
+                />
+            </View>
         </View>
         )
     }

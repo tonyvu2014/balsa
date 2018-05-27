@@ -92,12 +92,11 @@ class PreferencesScreen extends React.Component {
                     <TermAdditionBox action={this.addTerm}/>
                 </View>
                 <FlatList
-                    contentContainerStyle={styles.list}
                     data={this.state.terms}
                     renderItem={({item}) =><TermItem term={item.term} action={this.removeTerm}/>}
                 />
                 <View style={styles.banner}>
-                    <AdMobBanner style={styles.banner}
+                    <AdMobBanner
                         bannerSize="fullBanner"
                         adUnitID="ca-app-pub-3940256099942544/6300978111"
                         didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
@@ -121,11 +120,6 @@ const styles = StyleSheet.create({
     box: {
         marginTop: 50,
         marginBottom: 20
-    },
-
-    list: {
-        justifyContent: 'center',
-        alignItems: 'center'
     },
 
     banner: {

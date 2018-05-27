@@ -15,6 +15,16 @@ const TIMEOUT = 10000
 
 class FeedsScreen extends React.Component {
 
+    static navigationOptions = ({ navigation }) => {
+        const { params } = navigation.state;
+        return {
+            tabBarOnPress({ jumpToIndex, scene }) {
+                params.onTabFocus();
+                jumpToIndex(scene.index);
+            }
+        }
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -25,6 +35,9 @@ class FeedsScreen extends React.Component {
     }
 
     componentDidMount() {
+        this.props.navigation.setParams({
+            onTabFocus: this.getFeeds
+        });
         this.getFeeds()
     }
 
