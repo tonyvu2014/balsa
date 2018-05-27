@@ -8,7 +8,7 @@ import ArticleItem from '../components/ArticleItem'
 import loadIndicator from '../components/LoadingIndicator'
 
 
-const FEED_URL = 'http://67.209.122.81:8000/api/feeds'
+const FEED_URL = 'http://localhost:8080/api/feeds'
 const LIMIT = 20
 const TIMEOUT = 10000
 
@@ -33,7 +33,7 @@ class FeedsScreen extends React.Component {
         this.setState({ isLoading: true, hasError: false })
         AsyncStorage.getItem('preferences')
         .then(value => {
-            console.log('Value:', value)
+            console.log('preferences:', value)
             let terms = value.split(',')
             axios.post(FEED_URL, {
                 terms: terms,
@@ -70,31 +70,37 @@ class FeedsScreen extends React.Component {
             return (
                 <View style={styles.messageContainer}>
                     <Text style={styles.error}>Something went wrong. Please try again later.</Text>
-                    <RefreshButton action={this.getFeeds}/>
+                    <View style={styles.refresh}>
+                        <RefreshButton action={this.getFeeds}/>
+                    </View>
                 </View>
             )      
         } else if (this.state.feeds.length == 0) {
             return (
                 <View style={styles.messageContainer}>
                     <Text style={styles.notification}>No articles at the moment. Refresh or go to Preferences to update your subscription.</Text>
-                    <RefreshButton action={this.getFeeds}/>
+                    <View style={styles.refresh}>
+                        <RefreshButton action={this.getFeeds}/>
+                    </View>
                 </View>
             )
         } else {
             return (
                 <View style={styles.container}>
-                    <RefreshButton action={this.getFeeds}/>
-                    <ScrollView contentContainerStyle={styles.list}>
-                        <FlatList
-                        data={this.state.feeds}
-                        renderItem={({item}) =><ArticleItem title={item.title} url={item.url} action={this.onReadMore}/>}
-                        />
-                    </ScrollView>
-                    <AdMobBanner style={styles.banner}
-                        bannerSize="fullBanner"
-                        adUnitID="ca-app-pub-3940256099942544/6300978111"
-                        didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
+                    <View style={styles.refresh}>
+                        <RefreshButton action={this.getFeeds}/>
+                    </View>
+                    <FlatList contentContainerStyle={styles.list}
+                    data={this.state.feeds}
+                    renderItem={({item}) =><ArticleItem title={item.title} url={item.url} action={this.onReadMore}/>}
                     />
+                    <View style={styles.banner}>
+                        <AdMobBanner
+                            bannerSize="fullBanner"
+                            adUnitID="ca-app-pub-3940256099942544/6300978111"
+                            didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
+                        />
+                    </View>
                 </View>
             );
         }
@@ -106,13 +112,20 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff',
-        alignItems: 'center',
+        alignItems: 'stretch',
         justifyContent: 'center'
+    },
+
+    refresh: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        marginBottom: 10,  
     },
 
     list: {
         justifyContent: 'center',
-        alignItems: 'stretch'
+        alignItems: 'stretch',
     },
 
     banner: {

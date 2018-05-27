@@ -92,14 +92,17 @@ class PreferencesScreen extends React.Component {
                     <TermAdditionBox action={this.addTerm}/>
                 </View>
                 <FlatList
+                    contentContainerStyle={styles.list}
                     data={this.state.terms}
                     renderItem={({item}) =><TermItem term={item.term} action={this.removeTerm}/>}
                 />
-                <AdMobBanner style={styles.banner}
-                    bannerSize="fullBanner"
-                    adUnitID="ca-app-pub-3940256099942544/6300978111"
-                    didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
-                />
+                <View style={styles.banner}>
+                    <AdMobBanner style={styles.banner}
+                        bannerSize="fullBanner"
+                        adUnitID="ca-app-pub-3940256099942544/6300978111"
+                        didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
+                    />
+                </View>
             </View>
         )
     }

@@ -15,7 +15,6 @@ export default class RefreshButton extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10,
         justifyContent: 'center',
         borderRadius: 4,
         height: 40,
