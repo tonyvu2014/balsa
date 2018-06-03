@@ -48,7 +48,7 @@ class FeedsScreen extends React.Component {
         .then(value => {
             console.log('preferences:', value)
             if (value) {
-                console.log('loading feedss...')
+                console.log('loading feeds...')
                 let terms = value.split(',')
                 axios.post(FEED_URL, {
                     terms: terms,
