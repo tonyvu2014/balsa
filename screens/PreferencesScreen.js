@@ -20,7 +20,7 @@ class PreferencesScreen extends React.Component {
     getTerms() {
         AsyncStorage.getItem('preferences').then(value => {
             if (value) {
-                console.log('preferences:', value)
+                console.log('PreferencesScreen - preferences:', value)
                 let terms = []
                 let prefs = value.split(',')
                 for (let i = 0; i < prefs.length; i++) {

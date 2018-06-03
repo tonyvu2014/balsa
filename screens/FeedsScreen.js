@@ -10,7 +10,7 @@ import loadIndicator from '../components/LoadingIndicator'
 
 const FEED_URL = 'http://localhost:8000/api/feeds'
 const LIMIT = 20
-const TIMEOUT = 7000
+const TIMEOUT = 10000
 
 
 class FeedsScreen extends React.Component {
@@ -46,9 +46,9 @@ class FeedsScreen extends React.Component {
         this.setState({ isLoading: true, hasError: false })
         AsyncStorage.getItem('preferences')
         .then(value => {
-            console.log('preferences:', value)
+            console.log('FeedsScreen - preferences:', value)
             if (value) {
-                console.log('loading feeds...')
+                console.log('FeedsScreen - loading feeds...')
                 let terms = value.split(',')
                 axios.post(FEED_URL, {
                     terms: terms,
@@ -70,6 +70,7 @@ class FeedsScreen extends React.Component {
                     console.log(err)
                     this.setState({ isLoading:false, hasError: true })
                 })
+                console.log('FeedsScreen - loading feeds is done')
             } else {
                 this.setState({
                     isLoading: false
