@@ -1,5 +1,17 @@
 {
   "expo": {
-    "sdkVersion": "25.0.0"
+    "name": "Balsa",
+    "description": "A super lightweight news feed",
+    "githubUrl": "https://github.com/tonyvu2014/balsa",
+    "sdkVersion": "25.0.0",
+    "icon": "balsa.png",
+    "version": "0.1.0",
+    "slug": "balsa",
+    "ios": {
+      "bundleIdentifier": "com.tonyvu.balsa"
+    },
+    "android": {
+      "package": "com.tonyvu.balsa"
+    }
   }
 }

@@ -8,9 +8,9 @@ import ArticleItem from '../components/ArticleItem'
 import loadIndicator from '../components/LoadingIndicator'
 
 
-const FEED_URL = 'http://localhost:8080/api/feeds'
+const FEED_URL = 'http://localhost:8000/api/feeds'
 const LIMIT = 20
-const TIMEOUT = 10000
+const TIMEOUT = 7000
 
 
 class FeedsScreen extends React.Component {
@@ -47,27 +47,34 @@ class FeedsScreen extends React.Component {
         AsyncStorage.getItem('preferences')
         .then(value => {
             console.log('preferences:', value)
-            let terms = value.split(',')
-            axios.post(FEED_URL, {
-                terms: terms,
-                limit: LIMIT
-            }, 
-            {'timeout': TIMEOUT})
-            .then(res => {
-                let data = res.data
-                for (let i = 0; i < data.length; i++) {
-                    feeds.push({
-                        key: i,
-                        title: data[i].title,
-                        url: data[i].link
-                    })
-                }
-                this.setState({ feeds: feeds, isLoading: false, hasError: false })
-            })
-            .catch(err => {
-                console.log(err)
-                this.setState({ isLoading:false, hasError: true })
-            })
+            if (value) {
+                console.log('loading feedss...')
+                let terms = value.split(',')
+                axios.post(FEED_URL, {
+                    terms: terms,
+                    limit: LIMIT
+                }, 
+                {'timeout': TIMEOUT})
+                .then(res => {
+                    let data = res.data
+                    for (let i = 0; i < data.length; i++) {
+                        feeds.push({
+                            key: i,
+                            title: data[i].title,
+                            url: data[i].link
+                        })
+                    }
+                    this.setState({ feeds: feeds, isLoading: false, hasError: false })
+                })
+                .catch(err => {
+                    console.log(err)
+                    this.setState({ isLoading:false, hasError: true })
+                })
+            } else {
+                this.setState({
+                    isLoading: false
+                })
+            }
         })
     }
 
@@ -82,7 +89,7 @@ class FeedsScreen extends React.Component {
         } else if (this.state.hasError){
             return (
                 <View style={styles.messageContainer}>
-                    <Text style={styles.error}>Something went wrong. Please try again later.</Text>
+                    <Text style={styles.error}>Something went wrong. Please refresh or try again later.</Text>
                     <View style={styles.refresh}>
                         <RefreshButton action={this.getFeeds}/>
                     </View>
@@ -91,7 +98,7 @@ class FeedsScreen extends React.Component {
         } else if (this.state.feeds.length == 0) {
             return (
                 <View style={styles.messageContainer}>
-                    <Text style={styles.notification}>No articles at the moment. Refresh or go to Preferences to update your subscription.</Text>
+                    <Text style={styles.notification}>No articles at the moment. Please refresh or go to Preferences to update your subscription.</Text>
                     <View style={styles.refresh}>
                         <RefreshButton action={this.getFeeds}/>
                     </View>
