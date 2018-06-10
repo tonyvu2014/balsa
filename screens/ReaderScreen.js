@@ -3,6 +3,8 @@ import { View, WebView, StyleSheet } from 'react-native';
 import { AdMobBanner } from 'expo';
 import loadIndicator from '../components/LoadingIndicator';
 
+const AD_UNIT = 'ca-app-pub-3940256099942544/6300978111'
+
 export default class ReaderScreen extends React.Component {
     render() {
         return (
@@ -20,7 +22,7 @@ export default class ReaderScreen extends React.Component {
                 <AdMobBanner
                     style={styles.banner}
                     bannerSize="fullBanner"
-                    adUnitID="ca-app-pub-3940256099942544/6300978111"
+                    adUnitID={AD_UNIT}
                     didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
                 />
             </View>

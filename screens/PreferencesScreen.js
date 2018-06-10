@@ -4,6 +4,8 @@ import { AdMobBanner } from 'expo';
 import TermItem from '../components/TermItem';
 import TermAdditionBox from '../components/TermAdditionBox';
 
+const AD_UNIT = 'ca-app-pub-3940256099942544/6300978111'
+
 class PreferencesScreen extends React.Component {
 
     constructor(props) {
@@ -18,7 +20,8 @@ class PreferencesScreen extends React.Component {
     }
 
     getTerms() {
-        AsyncStorage.getItem('preferences').then(value => {
+        AsyncStorage.getItem('preferences')
+        .then(value => {
             if (value) {
                 console.log('PreferencesScreen - preferences:', value)
                 let terms = []
@@ -30,7 +33,7 @@ class PreferencesScreen extends React.Component {
             } else {
                 this.setState({terms: []})
             }
-        })
+        }).done()
     }
 
     addTerm = (term) => {
@@ -39,7 +42,8 @@ class PreferencesScreen extends React.Component {
             return
         }
         let newTerm = term.toLowerCase()
-        AsyncStorage.getItem('preferences').then(value => {
+        AsyncStorage.getItem('preferences')
+        .then(value => {
             if (value) {
                 let prefs = value.split(',')
                 if ( prefs.indexOf(newTerm) > -1 ) {
@@ -98,7 +102,7 @@ class PreferencesScreen extends React.Component {
                 <View style={styles.banner}>
                     <AdMobBanner
                         bannerSize="fullBanner"
-                        adUnitID="ca-app-pub-3940256099942544/6300978111"
+                        adUnitID={AD_UNIT}
                         didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
                     />
                 </View>

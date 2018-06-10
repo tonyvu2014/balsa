@@ -10,8 +10,8 @@ import loadIndicator from '../components/LoadingIndicator'
 
 const FEED_URL = 'http://localhost:8000/api/feeds'
 const LIMIT = 20
-const TIMEOUT = 10000
-
+const TIMEOUT = 7000
+const AD_UNIT = 'ca-app-pub-3940256099942544/6300978111'
 
 class FeedsScreen extends React.Component {
 
@@ -32,6 +32,7 @@ class FeedsScreen extends React.Component {
           isLoading: true,
           hasError: false
         };
+        this._preferences = ''
     }
 
     componentDidMount() {
@@ -42,41 +43,71 @@ class FeedsScreen extends React.Component {
     }
 
     getFeeds = () => {
-        let feeds = []
-        this.setState({ isLoading: true, hasError: false })
         AsyncStorage.getItem('preferences')
         .then(value => {
-            console.log('FeedsScreen - preferences:', value)
-            if (value) {
-                console.log('FeedsScreen - loading feeds...')
-                let terms = value.split(',')
-                axios.post(FEED_URL, {
+            console.log('FeedsScreen - value:', value)
+            this._preferences = value
+            this.loadFeeds()
+        }).catch(err => {
+            console.log(err)
+            this.setState({ isLoading:false, hasError: true })
+        }).done()
+    }
+
+    showFeeds = res => {
+        let data = res.data
+        let feeds = []
+        for (let i = 0; i < data.length; i++) {
+            feeds.push({
+                key: i,
+                title: data[i].title,
+                url: data[i].link
+            })
+        }
+        this.setState({ feeds: feeds, isLoading: false, hasError: false })
+    }
+
+    loadFeeds = () => {
+        this.setState({ isLoading: true, hasError: false })
+        let preferences = this._preferences
+        console.log('FeedsScreen - preferences:', preferences)
+        if (preferences) {
+            console.log('FeedsScreen - loading feeds...')
+            let terms = preferences.split(',')
+            axios.post(FEED_URL, 
+                {
                     terms: terms,
                     limit: LIMIT
-                }, 
-                {'timeout': TIMEOUT})
+                },
+                { timeout: TIMEOUT }
+            )
+            .then(res => {
+                this.showFeeds(res)
+                console.log('FeedsScreen - loading feeds is done')
+            })
+            .catch(err => {
+                axios.post(FEED_URL, 
+                    {
+                        terms: terms,
+                        limit: LIMIT
+                    }, 
+                    { timeout: TIMEOUT }
+                )
                 .then(res => {
-                    let data = res.data
-                    for (let i = 0; i < data.length; i++) {
-                        feeds.push({
-                            key: i,
-                            title: data[i].title,
-                            url: data[i].link
-                        })
-                    }
-                    this.setState({ feeds: feeds, isLoading: false, hasError: false })
-                })
-                .catch(err => {
+                    this.showFeeds(res)
+                    console.log('FeedsScreen - loading feeds is done')
+                }).catch(err =>  {
                     console.log(err)
                     this.setState({ isLoading:false, hasError: true })
                 })
-                console.log('FeedsScreen - loading feeds is done')
-            } else {
-                this.setState({
-                    isLoading: false
-                })
-            }
-        })
+            })
+        } else {
+            this.setState({
+                isLoading: false,
+                hasError: false,
+                feeds: []
+            })
+        }
     }
 
     onReadMore = (url) => {
@@ -92,7 +123,7 @@ class FeedsScreen extends React.Component {
                 <View style={styles.messageContainer}>
                     <Text style={styles.error}>Something went wrong. Please refresh or try again later.</Text>
                     <View style={styles.refresh}>
-                        <RefreshButton action={this.getFeeds}/>
+                        <RefreshButton action={this.loadFeeds}/>
                     </View>
                 </View>
             )      
@@ -101,7 +132,7 @@ class FeedsScreen extends React.Component {
                 <View style={styles.messageContainer}>
                     <Text style={styles.notification}>No articles at the moment. Please refresh or go to Preferences to update your subscription.</Text>
                     <View style={styles.refresh}>
-                        <RefreshButton action={this.getFeeds}/>
+                        <RefreshButton action={this.loadFeeds}/>
                     </View>
                 </View>
             )
@@ -109,7 +140,7 @@ class FeedsScreen extends React.Component {
             return (
                 <View style={styles.container}>
                     <View style={styles.refresh}>
-                        <RefreshButton action={this.getFeeds}/>
+                        <RefreshButton action={this.loadFeeds}/>
                     </View>
                     <FlatList contentContainerStyle={styles.list}
                     data={this.state.feeds}
@@ -118,7 +149,7 @@ class FeedsScreen extends React.Component {
                     <View style={styles.banner}>
                         <AdMobBanner
                             bannerSize="fullBanner"
-                            adUnitID="ca-app-pub-3940256099942544/6300978111"
+                            adUnitID={AD_UNIT}
                             didFailToReceiveAdWithError={() => {console.log('Error showing ad')}}
                         />
                     </View>
